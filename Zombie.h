@@ -107,7 +107,11 @@ struct zombie
                 score++;
             }
         }
-        else if(dead == 0 && x == location.first) End = 1;
+        else if(dead == 0 && x == location.first)
+        {
+            End = 1;
+            Human_Heart();
+        }
     }
 
     void quit()

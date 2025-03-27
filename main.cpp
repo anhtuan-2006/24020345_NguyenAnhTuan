@@ -39,6 +39,36 @@ string getscore(int score)
 }
 
 char *s;
+void Ending()
+{
+    SDL_Event e;
+    SDL_Delay(500);
+    End_Music_Game();
+    End_Zombie_Music();
+    text = loadFont("Font.otf", 50);
+    Score = renderText(s, text, color);
+    Lose_Sound();
+    int cnt = 0;
+    while(cnt <= 90)
+    {
+        SDL_Delay(40);
+        renderBackground(BG, renderer);
+        character.RenderCharacter(renderer, jumpping, attacking);
+        SDL_RenderPresent(renderer);
+        character.dead();
+        cnt++;
+    }
+
+    RenderText(TheEnd, SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 150);
+    RenderText(Score, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 50);
+    SDL_RenderPresent(renderer);
+
+    while(true)
+    {
+        if(SDL_PollEvent(&e) && e.type == SDL_KEYDOWN) return;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     s = new char[20];
@@ -125,27 +155,12 @@ int main(int argc, char *argv[])
 
         SDL_RenderPresent(renderer);
     }
-    SDL_Delay(500);
-    End_Music_Game();
-    End_Zombie_Music();
-    RenderText(TheEnd, SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 150);
-    text = loadFont("Font.otf", 50);
-    Score = renderText(s, text, color);
-    RenderText(Score, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 50);
-    Lose_Sound();
-    SDL_RenderPresent(renderer);
-    while(true)
-    {
-        SDL_Delay(40);
-        if(SDL_WaitEvent(&e) && e.type == SDL_KEYDOWN) break;
-    }
-    SDL_Delay(2000);
+    Ending();
 
     delete(s);
 
 
     Mix_Quit();
-    SDL_Delay(2000);
     character.quit();
     quitSDL(window, renderer);
     return 0;

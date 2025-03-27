@@ -9,6 +9,7 @@
 SDL_Texture *ninja_walk[7];
 SDL_Texture *ninja_jump[9];
 SDL_Texture *ninja_attack[2][5];
+SDL_Texture *ninja_dead[5];
 
 struct Character
 {
@@ -17,8 +18,9 @@ struct Character
     int speed = 10;
     int direction = 1;
     int act_walk = 0;
-    int act_jump = 1;
+    float act_jump = 1;
     int act_attack = 0;
+    int act_dead = 0;
     int type_attack = 1;
 
     int getDirection()
@@ -61,14 +63,21 @@ struct Character
         ninja_attack[1][2] = loadTexture("Animation/Attack2/2.png", renderer);
         ninja_attack[1][3] = loadTexture("Animation/Attack2/3.png", renderer);
         ninja_attack[1][4] = loadTexture("Animation/Attack2/4.png", renderer);
+
+        ninja_dead[0] = loadTexture("Animation/Dead/Dead.png", renderer);
+        ninja_dead[1] = loadTexture("Animation/Dead/Dead (1).png", renderer);
+        ninja_dead[2] = loadTexture("Animation/Dead/Dead (2).png", renderer);
+        ninja_dead[3] = loadTexture("Animation/Dead/Dead (3).png", renderer);
+        ninja_dead[4] = loadTexture("Animation/Dead/Dead (4).png", renderer);
     }
 
     void RenderCharacter(SDL_Renderer *renderer, bool &jumpping, bool &attacking)
     {
         SDL_Texture *texture;
 
-        if(attacking) texture = ninja_attack[type_attack][act_attack];
-        else if(jumpping) texture = ninja_jump[act_jump];
+        if(End == 1) texture = ninja_dead[act_dead];
+        else if(jumpping) texture = ninja_jump[int(act_jump)];
+        else if(attacking) texture = ninja_attack[type_attack][act_attack];
         else texture = ninja_walk[act_walk];
 
         SDL_Rect dest;
@@ -117,6 +126,12 @@ struct Character
         if(act_jump >= 5) y += 3 * speed;
     }
 
+    void dead()
+    {
+        act_dead++;
+        if(act_dead > 4) act_dead = 4;
+    }
+
     void action(SDL_Event &e)
     {
         if (e.key.keysym.sym == SDLK_a)
@@ -147,14 +162,14 @@ struct Character
                 y = 625;
                 act_jump = 1;
                 jumpping = 0;
-                x += direction * 20;
+                x += direction * 40;
             }
             else
             {
                 up();
                 if(direction == -1) left();
                 else right();
-                act_jump++;
+                act_jump += 0.5;
             }
         }
 

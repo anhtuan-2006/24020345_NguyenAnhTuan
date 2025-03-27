@@ -14,6 +14,7 @@ Mix_Chunk *zombie_sound;
 Mix_Chunk *Fight[3];
 Mix_Chunk *Lose;
 Mix_Chunk *ZombieDead;
+Mix_Chunk *HumanHeart;
 
 void initSound()
 {
@@ -29,6 +30,7 @@ void initSound()
     Fight[2] = loadSound("Sound/Fight3.mp3");
     Lose = loadSound("Sound/Lose.mp3");
     ZombieDead = loadSound("Sound/ZombieDead.mp3");
+    HumanHeart = loadSound("Sound/Heart.mp3");
 }
 
 void Music_BackGround()
@@ -76,6 +78,11 @@ void Fight_Sound()
 void Zombie_Dead_Sound()
 {
     playSound(ZombieDead);
+}
+
+void Human_Heart()
+{
+    playSound(HumanHeart);
 }
 
 #endif // SOUND
