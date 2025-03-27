@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1743057207 source:d:\project\main.cpp
+	<iostream>
+	"SourceSDL.h"
+	"Character.h"
+	"Zombie.h"
+	"Input_Valuable.h"
+	"Sound.h"
+	"Text.h"
+
+1743012646 d:\project\sourcesdl.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_ttf.h>
+	<bits/stdc++.h>
+
+1743012636 source:d:\project\sourcesdl.cpp
+	"SourceSDL.h"
+
+1742305575 source:d:\project\character.cpp
+
+1743008212 d:\project\character.h
+	<bits/stdc++.h>
+	"SourceSDL.h"
+	"Input_Valuable.h"
+	"Sound.h"
+
+1743018311 d:\project\input_valuable.h
+	"SDL2/SDL.h"
+
+1743057727 d:\project\zombie.h
+	<bits/stdc++.h>
+	"SourceSDL.h"
+	"Sound.h"
+
+1743057791 d:\project\sound.h
+	<bits/stdc++.h>
+	<SDL2/SDL_mixer.h>
+	"SourceSDL.h"
+	"Input_Valuable.h"
+
+1743055781 d:\project\text.h
+	<bits/stdc++.h>
+	<SDL2/SDL_ttf.h>
+	"Input_Valuable.h"
+	"SourceSDL.h"
+
