@@ -23,7 +23,7 @@ int oldlevel = 0;
 int oldHeart = 0;
 int level = 100;
 int Level = 1;
-int Heart = 5;
+int Heart = 3;
 
 int score = 0;
 int highscore = 0;

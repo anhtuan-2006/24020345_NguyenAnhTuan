@@ -222,14 +222,12 @@ struct Health
     void More(int tmp)
     {
         x = tmp;
-        cout << tmp << endl;
         appear = 1;
     }
 
     void action()
     {
         if(appear == 0) return;
-        cout << x << " " << y << endl;
         renText("o", 15, x, y, 225, color, color);
         color = 225 - color;
         if(abs(x - character.x) <= 20)

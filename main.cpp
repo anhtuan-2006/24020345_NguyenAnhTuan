@@ -84,6 +84,7 @@ void Ending()
 
     renText("The End !!!", 100, SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 150, 225, 225, 225);
     renText(getstringandint("Score: ", score), 50, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 50, 225, 225, 225);
+    renText(getstringandint("HIGH SCORE: ", highscore), 50, SCREEN_WIDTH / 2 - 250, SCREEN_HEIGHT / 2, 225, 225, 225);
     SDL_RenderPresent(renderer);
     SDL_Delay(2000);
 
@@ -111,6 +112,10 @@ int main(int argc, char *argv[])
     renderBackground(BG, renderer);
     renText("BLACK VS ZOMBIE", 100, SCREEN_WIDTH / 2 - 560, SCREEN_HEIGHT / 2 - 200, 225, 225, 225);
     renText("Press any key to start", 25, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2, 225, 225, 225);
+    renText("W: Jump", 25, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2 + 30, 225, 225, 225);
+    renText("A: Left", 25, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2 + 60, 225, 225, 225);
+    renText("D: Right", 25, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2 + 90, 225, 225, 225);
+    renText("Can heal after level up", 25, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2 + 120, 225, 225, 225);
     SDL_RenderPresent(renderer);
     SDL_Event e;
     while(true)
