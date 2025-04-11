@@ -5,6 +5,7 @@
 #include "SourceSDL.h"
 #include "Input_Valuable.h"
 #include "Sound.h"
+#include "Text.h"
 
 SDL_Texture *ninja_walk[7];
 SDL_Texture *ninja_jump[9];
@@ -210,6 +211,35 @@ struct Character
         }
     }
 } character;
+
+struct Health
+{
+    int y = 700;
+    int x;
+    int appear = 0;
+    int color = 0;
+
+    void More(int tmp)
+    {
+        x = tmp;
+        cout << tmp << endl;
+        appear = 1;
+    }
+
+    void action()
+    {
+        if(appear == 0) return;
+        cout << x << " " << y << endl;
+        renText("o", 15, x, y, 225, color, color);
+        color = 225 - color;
+        if(abs(x - character.x) <= 20)
+        {
+            appear = 0;
+            Heart++;
+            Update();
+        }
+    }
+} health;
 
 
 

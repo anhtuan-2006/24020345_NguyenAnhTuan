@@ -10,11 +10,13 @@ using namespace std;
 
 Mix_Music *music;
 Mix_Music *music_game;
-Mix_Chunk *zombie_sound;
+Mix_Music *zombie_sound;
 Mix_Chunk *Fight[3];
 Mix_Chunk *Lose;
 Mix_Chunk *ZombieDead;
 Mix_Chunk *HumanHeart;
+Mix_Chunk *LevelUp;
+Mix_Chunk *Upgrade;
 
 void initSound()
 {
@@ -24,13 +26,15 @@ void initSound()
     }
     music = loadMusic("Sound/Sound.mp3");
     music_game = loadMusic("Sound/music.mp3");
-    zombie_sound = loadSound("Sound/Zombie.mp3");
+    zombie_sound = loadMusic("Sound/Zombie.mp3");
     Fight[0] = loadSound("Sound/Fight1.mp3");
     Fight[1] = loadSound("Sound/Fight2.mp3");
     Fight[2] = loadSound("Sound/Fight3.mp3");
     Lose = loadSound("Sound/Lose.mp3");
+    Upgrade = loadSound("Sound/Upgrade.mp3");
     ZombieDead = loadSound("Sound/ZombieDead.mp3");
     HumanHeart = loadSound("Sound/Heart.mp3");
+    LevelUp = loadSound("Sound/LevelUp.mp3");
 }
 
 void Music_BackGround()
@@ -55,17 +59,22 @@ void End_Music_Game()
 
 void Zombie_Music()
 {
-    playSound(zombie_sound);
+    playMusic(zombie_sound);
 }
 
 void End_Zombie_Music()
 {
-    Mix_FreeChunk(zombie_sound);
+    Mix_FreeMusic(zombie_sound);
 }
 
 void Lose_Sound()
 {
     playSound(Lose);
+}
+
+void Level_Up()
+{
+    playSound(LevelUp);
 }
 
 void Fight_Sound()
@@ -83,6 +92,11 @@ void Zombie_Dead_Sound()
 void Human_Heart()
 {
     playSound(HumanHeart);
+}
+
+void Update()
+{
+    playSound(Upgrade);
 }
 
 #endif // SOUND

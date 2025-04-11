@@ -48,7 +48,7 @@
 
 1742305575 source:d:\project\24020345_nguyenanhtuan\character.cpp
 
-1743085256 source:d:\project\24020345_nguyenanhtuan\main.cpp
+1744359789 source:d:\project\24020345_nguyenanhtuan\main.cpp
 	<iostream>
 	"SourceSDL.h"
 	"Character.h"
@@ -64,27 +64,28 @@
 	<SDL2/SDL_ttf.h>
 	<bits/stdc++.h>
 
-1743085206 d:\project\24020345_nguyenanhtuan\character.h
+1744360264 d:\project\24020345_nguyenanhtuan\character.h
 	<bits/stdc++.h>
 	"SourceSDL.h"
 	"Input_Valuable.h"
 	"Sound.h"
+	"Text.h"
 
-1743018311 d:\project\24020345_nguyenanhtuan\input_valuable.h
+1744358210 d:\project\24020345_nguyenanhtuan\input_valuable.h
 	"SDL2/SDL.h"
 
-1743084260 d:\project\24020345_nguyenanhtuan\sound.h
+1744360101 d:\project\24020345_nguyenanhtuan\sound.h
 	<bits/stdc++.h>
 	<SDL2/SDL_mixer.h>
 	"SourceSDL.h"
 	"Input_Valuable.h"
 
-1743084283 d:\project\24020345_nguyenanhtuan\zombie.h
+1744271025 d:\project\24020345_nguyenanhtuan\zombie.h
 	<bits/stdc++.h>
 	"SourceSDL.h"
 	"Sound.h"
 
-1743055781 d:\project\24020345_nguyenanhtuan\text.h
+1744272087 d:\project\24020345_nguyenanhtuan\text.h
 	<bits/stdc++.h>
 	<SDL2/SDL_ttf.h>
 	"Input_Valuable.h"

@@ -9,6 +9,7 @@
 using namespace std;
 
 TTF_Font *text;
+SDL_Texture *Txt;
 
 TTF_Font* loadFont(const char* path, int Size)
 {
@@ -41,11 +42,6 @@ void initText()
     {
         logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ", TTF_GetError());
     }
-    text = loadFont("Font.otf", 100);
-    NameGame = renderText("NINJA VS ZOMBIE", text, color);
-    TheEnd = renderText("THE END !!!", text, color);
-    text = loadFont("Font.otf", 25);
-    KeyPressToPlay = renderText("Press any key to start", text, color);
 }
 
 void RenderText(SDL_Texture *texture, int x, int y)
@@ -57,6 +53,14 @@ void RenderText(SDL_Texture *texture, int x, int y)
     SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
 
     SDL_RenderCopy(renderer, texture, NULL, &dest);
+}
+
+void renText(const char *s, int sz, int w, int h, int r, int g, int b)
+{
+    SDL_Color color = {r, g, b};
+    text = loadFont("Font.otf", sz);
+    Txt = renderText(s, text, color);
+    RenderText(Txt, w, h);
 }
 
 #endif // TEXT

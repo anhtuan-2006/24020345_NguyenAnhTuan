@@ -21,35 +21,58 @@ void renderBackground(SDL_Texture *texture, SDL_Renderer *renderer)
     SDL_RenderCopy(renderer, texture, 0, &tmp);
 }
 
-string getscore(int score)
+char* getstringandint(string s, int val)
 {
-    string ss = "";
-    if(score == 0)
+    string ss;
+    if (val == 0)
     {
-        ss = "0";
-        return ss;
+        ss.push_back('0');
     }
-    while(score > 0)
+    else
     {
-        ss.push_back(char(score % 10 + '0'));
-        score /= 10;
+        while (val > 0)
+        {
+            ss.push_back('0' + (val % 10));
+            val /= 10;
+        }
+        reverse(ss.begin(), ss.end());
     }
-    reverse(ss.begin(), ss.end());
-    return ss;
+    char *res;
+    res = new char[int(s.size() + ss.size()) + 1];
+    for(int i = 0; i < s.size(); i++) res[i] = s[i];
+    for(int i = 0; i < ss.size(); i++) res[i + s.size()] = ss[i];
+    res[int(s.size() + ss.size())] = '\0';
+    return res;
+}
+
+void get_high_score()
+{
+    ifstream inp;
+    inp.open("HighScore.txt");
+    inp >> highscore;
+    inp.close();
+}
+
+void update_high_score()
+{
+    ofstream out;
+    out.open("HighScore.txt");
+    highscore = max(highscore, score);
+    out << highscore;
+    out.close();
 }
 
 char *s;
 void Ending()
 {
+    update_high_score();
     SDL_Event e;
     SDL_Delay(500);
     End_Music_Game();
     End_Zombie_Music();
-    text = loadFont("Font.otf", 50);
-    Score = renderText(s, text, color);
     Lose_Sound();
     int cnt = 0;
-    while(cnt <= 90)
+    while(cnt <= 10)
     {
         SDL_Delay(40);
         renderBackground(BG, renderer);
@@ -59,9 +82,10 @@ void Ending()
         cnt++;
     }
 
-    RenderText(TheEnd, SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 150);
-    RenderText(Score, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 50);
+    renText("The End !!!", 100, SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 150, 225, 225, 225);
+    renText(getstringandint("Score: ", score), 50, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 50, 225, 225, 225);
     SDL_RenderPresent(renderer);
+    SDL_Delay(2000);
 
     while(true)
     {
@@ -69,11 +93,14 @@ void Ending()
     }
 }
 
+int Rand(int l, int r)
+{
+    return rand() % (r - l + 1) + l;
+}
+
 int main(int argc, char *argv[])
 {
-    s = new char[20];
-    for(int i = 0; i < 21; i++) s[i] = ' ';
-
+    get_high_score();
     srand(time(0));
     BG = loadTexture("BackGround.png", renderer);
     character.input(renderer);
@@ -82,8 +109,8 @@ int main(int argc, char *argv[])
     initSound();
     Music_BackGround();
     renderBackground(BG, renderer);
-    RenderText(NameGame, SCREEN_WIDTH / 2 - 560, SCREEN_HEIGHT / 2 - 200);
-    RenderText(KeyPressToPlay, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2);
+    renText("BLACK VS ZOMBIE", 100, SCREEN_WIDTH / 2 - 560, SCREEN_HEIGHT / 2 - 200, 225, 225, 225);
+    renText("Press any key to start", 25, SCREEN_WIDTH / 2 - 210, SCREEN_HEIGHT / 2, 225, 225, 225);
     SDL_RenderPresent(renderer);
     SDL_Event e;
     while(true)
@@ -91,9 +118,8 @@ int main(int argc, char *argv[])
         SDL_Delay(40);
         if(SDL_WaitEvent(&e) && e.type == SDL_KEYDOWN) break;
     }
-    Mix_PauseMusic();
     End_Music_BackGround();
-    Music_Game();
+    //Music_Game();
     OneMoreZombie(renderer);
     Zombie_Music();
 
@@ -112,20 +138,30 @@ int main(int argc, char *argv[])
             character.action(e);
         }
         ZombieAction(character.getDirection(), character.getlocation(), e );
+        health.action();
 
         if (Time - old >= 5)
             character.nothing();
 
-        if(Time - oldlevel >= 500)
+        if(score >= (10 + Level) * Level)
         {
-            level = max(0, level - 10);
+            level = max(5, level - 10);
+            Level++;
+            Level_Up();
             oldlevel = Time;
+            health.More(Rand(10, SCREEN_WIDTH - 10));
+        }
+        if(Time - oldlevel <= 100 && Level != 1)
+        {
+            int r = rand() % 226;
+            int g = rand() % 226;
+            int b = rand() % 226;
+            renText("Level Up", 100, SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 350, r, g, b);
         }
 
         if(Time - Time2 >= level)
         {
             OneMoreZombie(renderer);
-            Zombie_Music();
             Time2 = Time;
         }
 
@@ -133,25 +169,14 @@ int main(int argc, char *argv[])
         {
             Time2 = Time2 - Time;
             oldlevel = oldlevel - Time;
+            oldHeart = oldHeart - Time;
             Time = old = 0;
         }
 
-        string ss = getscore(score);
-        *(s + 0) = 'S';
-        *(s + 1) = 'C';
-        *(s + 2) = 'O';
-        *(s + 3) = 'R';
-        *(s + 4) = 'E';
-        *(s + 5) = ':';
-        *(s + 6) = ' ';
-        int id = 6;
-        for(char &x : ss)
-        {
-            id++;
-            *(s + id) = x;
-        }
-        Score = renderText(s, text, color);
-        RenderText(Score, 0, 0);
+        renText(getstringandint("High Score: ", highscore), 25, 0, 0, 225, 225, 225);
+        renText(getstringandint("Score: ", score), 25, 0, 25, 225, 225, 225);
+        renText(getstringandint("Level: ", Level), 25, 0, 50, 225, 225, 225);
+        renText(getstringandint("Heart: ", Heart), 25, 0, 75, 225, 225, 225);
 
         SDL_RenderPresent(renderer);
     }

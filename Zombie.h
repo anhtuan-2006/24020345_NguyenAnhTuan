@@ -107,10 +107,12 @@ struct zombie
                 score++;
             }
         }
-        else if(dead == 0 && x == location.first)
+        else if(Time - oldHeart > 100 && dead == 0 && x == location.first)
         {
-            End = 1;
+            oldHeart = Time;
+            Heart--;
             Human_Heart();
+            if(Heart == 0) End = 1;
         }
     }
 
